@@ -1,0 +1,14 @@
+#!/bin/bash
+
+while read line
+do
+  if [ "$1" == "$(echo $line | sed 's/\=.*$//g')" ];then
+        MACADDRESS=$(echo $line | sed 's/^.*\=//g')
+        wakeonlan -i 192.168.179.255 $MACADDRESS
+        exit 1
+  fi
+done < $HOME/etc/macaddress
+
+if [ $? == "1"]; then exit; fi
+echo 'Server is not found. Please check ~/etc/macaddress.'
+echo 'This command is located at ~/bin/wol.'
