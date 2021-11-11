@@ -1,10 +1,13 @@
 #!/bin/bash
 
+# broadcast address
+brd=""
+
 while read line
 do
   if [ "$1" == "$(echo $line | sed 's/\=.*$//g')" ];then
         MACADDRESS=$(echo $line | sed 's/^.*\=//g')
-        wakeonlan -i 192.168.179.255 $MACADDRESS
+        wakeonlan -i $brd $MACADDRESS
         exit 1
   fi
 done < $HOME/etc/macaddress
